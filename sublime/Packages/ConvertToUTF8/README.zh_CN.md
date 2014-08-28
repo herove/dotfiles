@@ -2,12 +2,13 @@
 ------------------
 通过本插件，您可以编辑并保存目前编码不被 Sublime Text 支持的文件，特别是中日韩用户使用的 GB2312，GBK，BIG5，EUC-KR，EUC-JP 等。ConvertToUTF8 同时支持 Sublime Text 2 和 3。
 
-![ConvertToUTF8](http://dl.dropbox.com/u/31937639/ConvertToUTF8/ConvertToUTF8.gif)
+![ConvertToUTF8](http://dl.dropboxusercontent.com/u/31937639/ConvertToUTF8/ConvertToUTF8.gif)
 
-如果您觉得本插件对您有所帮助，您可以请我喝杯咖啡让我保持清醒。感谢！:)
+如果您觉得本插件有用并想给予支持，可通过支付宝或Paypal捐助。感谢！:)
 
-[![通过支付宝请我](http://dl.dropbox.com/u/31937639/alipay.png)](https://me.alipay.com/seanliang)
-[![通过PayPal请我](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=GP6Y25N7Q9E26&lc=US&item_name=Buy%20me%20a%20cup%20of%20coffee&item_number=ConvertToUTF8&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest)
+![支付宝钱包扫一下](http://dl.dropboxusercontent.com/u/31937639/alipay_code.png) 或 
+[![PayPal捐助](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=GP6Y25N7Q9E26&lc=US&item_name=Buy%20me%20a%20cup%20of%20coffee&item_number=ConvertToUTF8&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHostedGuest)
+
 
 注意
 ------------------
@@ -19,17 +20,17 @@
 
 安装
 ------------------
-推荐使用 [Package Control](http://wbond.net/sublime_packages/package_control) 查找 *ConvertToUTF8* 进行自动下载安装与更新。
+推荐使用 [Package Control](https://sublime.wbond.net/installation) 查找 *ConvertToUTF8* 进行自动下载安装与更新。
 
 如需手工安装，请将本项目打包下载并解压，将解压后的文件夹名修改为 *ConvertToUTF8* ，然后将此文件夹移动到 Sublime Text 的 *Packages* 文件夹下（可通过 Sublime Text 菜单中的 Preferences > Browse Packages 找到 *Packages* 文件夹）。
 
 您的文件夹应该看起来是这样的：
 
-![Folder Hierarchy](http://dl.dropbox.com/u/31937639/ConvertToUTF8/hierarchy.png)
+![Folder Hierarchy](http://dl.dropboxusercontent.com/u/31937639/ConvertToUTF8/hierarchy.png)
 
 设置
 ------------------
-请查看 ConvertToUTF8.sublime-settings 文件获取详细信息。为防止更新插件时被覆盖，请将个人设置保存到 User 目录中名为 ConvertToUTF8.sublime-settings 文件中。
+请查看 ConvertToUTF8.sublime-settings 文件获取详细信息。为防止更新插件时被覆盖，请将个人设置保存到 User 目录中名为 ConvertToUTF8.sublime-settings 文件中。您可以在 .sublime-project 文件（可通过 Project > Edit Project 打开）中指定项目专属设置（除 encoding_list 和 max_cache_size 外）。
 
 * encoding_list：检测失败时显示的编码列表
 * max_cache_size：最大编码缓存数量，0 表示不缓存（默认为 100）
@@ -82,7 +83,7 @@
 
 * 问：我的文件被保存为UTF-8，而且变成了乱码，要如何恢复？
 
-  答：请打开这个文件，并确认它的编码是UTF-8，然后选择菜单项目“File -> Save with Encoding -> Western (Windows 1252)”，关闭再重新打开该文件即可。
+  答：请打开这个文件，并确认它的编码是UTF-8，然后选择菜单项目 File > Save with Encoding > Western (Windows 1252)，关闭再重新打开该文件即可。
 
 联系我
 ------------------

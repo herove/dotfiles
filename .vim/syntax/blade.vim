@@ -1,0 +1,1 @@
+/Users/leihao/letv/tools/typhoon-blade-master/vim/syntax/blade.vim

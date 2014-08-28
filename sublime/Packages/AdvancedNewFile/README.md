@@ -13,10 +13,9 @@ Installation through [package control](http://wbond.net/sublime_packages/package
 
 * In the Command Palette, enter `Package Control: Install Package`
 * Search for `AdvancedNewFile`
-* In the Command Palette, enter `Package Control :Enable Package` -> select AdvancedNewFile
 
 ### Manual
-Clone or copy this repository into the packages directory. By default, they are located at:
+Clone or copy this repository into the packages directory. You will need to rename the folder to `AdvancedNewFile` if using this method. By default, the Package directory is located at:
 
 * OS X: ~/Library/Application Support/Sublime Text 2/Packages/
 * Windows: %APPDATA%/Roaming/Sublime Text 2/Packages/
@@ -27,6 +26,8 @@ or
 * OS X: ~/Library/Application Support/Sublime Text 3/Packages/
 * Windows: %APPDATA%/Roaming/Sublime Text 3/Packages/
 * Linux: ~/.config/sublime-text-3/Packages/
+
+Depending on your install on windows, the ST packages path may be `%APPDATA%/Sublime Text 2/...`
 
 ## Usage
 Simply bring up the AdvancedNewFile input through the appropriate [key binding](https://github.com/skuroda/Sublime-AdvancedNewFile). Then, enter the path, along with the file name into the input field. Upon pressing enter, the file will be created. In addition, if the directories specified do not yet exists, they will also be created. For more advanced usage of this plugin, be sure to look at [Advanced Path Usage](https://github.com/skuroda/Sublime-AdvancedNewFile#advanced-path-usage). By default, the path to the file being created will be filled shown in the status bar as you enter the path information.
@@ -151,7 +152,36 @@ String representing permissions to be applied to newly created files. E.g. "777"
 
 `rename_default`:
 
-Default input for renaming a file. Special value `<filename>` will be replaced with the current file name. Special value `<filepath>` will be replaced with the absolute path of the current file.
+Default input for renaming a file. Special value `<filename>` will be replaced with the current file name. Special value `<filepath>` will be replaced with the complete filepath, including the filename. Special value `<filedirectory>` will be replaced with the filepath, not including the filename. Note that a colon as the default will resolve to the same path as `<filedirectory>`, if the file exists on disk.
+
+`vcs_management`:
+
+Setting to control if VCS management is used when moving and removing files.
+
+`file_templates`:
+
+An object containing information to use for templates when creating new files. The key values for this object should be a file extension. Files without extensions such as "Makefile" or ".bash_profile" use the full file name as the key. The value may either be a string of the content to be inserted or a list of paths. If a list of paths is specified, the name of the file will be displayed during selection. The paths must either be absolute, from the home directory of the user (`~/`), or relative to the Packages directory. These relative files should have the form "Packages/User/mytest.sublime-snippet". If a string is used, or the list contains a single entry, it will be automatically inserted into any newly created files.
+
+`shell_input`:
+
+Setting this value to true will allow you to escape characters as you normally would when using a shell. For example, given the input string "foo\ bar", false would result in a file named " bar" in the foo directory. With the value set to true, a file named "foo bar" would be created. In addition, setting this value to true will allow for curly brace expansion. Currently, only comma separated entries are supported.
+
+`append_extension_on_move`:
+
+Setting to control if the extension will be automatically applied to renamed files.
+
+`relative_fallback_index`:
+
+An integer value representing a folder index to be used when a relative path cannot be resolved from the current active view. If an index outside of the range  of existing folders is used, it will default to 0 (the top level folder). If no  folders exist as part of the project the home directory will be used.
+
+`append_extension_on_copy`:
+
+Setting to control if the extension will be automatically applied to copied files.
+
+`copy_default`:
+
+Same as `rename_default`, applied to copy command.
+
 
 ### Project Specific Settings
 All of the above settings can also be specified as part of the project specific settings. These values override any previous values set by higher level settings, with aliases being an exception. Alias settings will be merged with higher level configurations for alias. In addition, if the same alias exist for both default/user settings and project settings, the project setting will take precedence.

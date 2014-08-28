@@ -1,0 +1,6 @@
+{
+    "Python": {
+        "python": "/usr/bin/python",
+        "pythonExtraPaths": []
+    }
+}

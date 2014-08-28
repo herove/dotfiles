@@ -21,8 +21,12 @@ else:
             reload_mods.append(mod)
 
 mods_load_order = [
+    '',
     '.anf_util',
     '.completion_base',
+
+    ".lib",
+    ".lib.package_resources",
 
     ".completions",
     '.completions.nix_completion',
@@ -32,14 +36,18 @@ mods_load_order = [
     ".platform.windows_platform",
     ".platform.nix_platform",
 
+    ".vcs",
+    ".vcs.git",
+    ".vcs.git.git_command_base",
+
     ".commands",
     ".commands.command_base",
-    ".commands.git",
-    ".commands.git.git_command_base",
+    ".commands.duplicate_file_base",
     ".commands.helper_commands",
     '.commands.new_file_command',
     ".commands.move_file_command",
-    ".commands.delete_file_command"
+    ".commands.delete_file_command",
+    ".commands.copy_file_command"
 ]
 
 for suffix in mods_load_order:

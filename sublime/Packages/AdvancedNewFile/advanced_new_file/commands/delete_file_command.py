@@ -1,8 +1,9 @@
 import os
 import sublime
 import sublime_plugin
+import sys
 from ..anf_util import *
-from .git.git_command_base import GitCommandBase
+from ..vcs.git.git_command_base import GitCommandBase
 from .command_base import AdvancedNewFileBase
 
 
@@ -60,9 +61,19 @@ class AdvancedNewFileDelete(AdvancedNewFileBase, sublime_plugin.WindowCommand,
         if vcs_tracking:
             self._git_rm(filepath)
         else:
-            self.window.run_command("delete_file", {"files": [filepath]})
+            self._execute_delete_file(filepath)
 
         self.refresh_sidebar()
+
+    def _execute_delete_file(self, filepath):
+        if IS_ST3 and self._side_bar_enhancements_installed():
+            import Default.send2trash as send2trash
+            send2trash.send2trash(filepath)
+        else:
+            self.window.run_command("delete_file", {"files": [filepath]})
+
+    def _side_bar_enhancements_installed(self):
+        return "SideBarEnhancements.SideBar" in sys.modules
 
     def close_view(self, filepath):
         file_view = self._find_open_file(filepath)

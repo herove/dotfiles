@@ -19,6 +19,7 @@
         "command": "bh_key",
         "args":
         {
+            "no_outside_adj": true,
             "lines" : true,
             "plugin":
             {
@@ -34,6 +35,7 @@
         "command": "bh_key",
         "args":
         {
+            "no_outside_adj": true,
             "lines" : true,
             "plugin":
             {
@@ -55,6 +57,7 @@
     },
     // Select text between brackets
     {
+        "no_outside_adj": true,
         "keys": ["ctrl+alt+super+s"],
         "command": "bh_key",
         "args":
@@ -64,6 +67,22 @@
             {
                 "type": ["__all__"],
                 "command": "bh_modules.bracketselect"
+            }
+        }
+    },
+    // Select text including brackets
+    {
+        "keys": ["ctrl+alt+super+d"],
+        "command": "bh_key",
+        "args":
+        {
+            "no_outside_adj": true,
+            "lines" : true,
+            "plugin":
+            {
+                "type": ["__all__"],
+                "command": "bh_modules.bracketselect",
+                "args": {"always_include_brackets": true}
             }
         }
     },

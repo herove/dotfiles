@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/leihao/letv/search2/crawler/proto'
-let g:netrw_dirhist_2='/private/etc'
-let g:netrw_dirhist_3='/Users/leihao/.vim'

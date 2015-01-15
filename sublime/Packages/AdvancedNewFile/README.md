@@ -182,6 +182,17 @@ Setting to control if the extension will be automatically applied to copied file
 
 Same as `rename_default`, applied to copy command.
 
+`cut_to_file_default`:
+
+Same as `rename_default`, applied to cut to file command.
+
+`current_fallback_to_project`:
+
+If default_root is set to current, the project folder should be used as the default rather than the home directory.
+
+`warn_overwrite_on_move`:
+
+If a warning should be displayed when trying to overwrite an existing file using the move command.
 
 ### Project Specific Settings
 All of the above settings can also be specified as part of the project specific settings. These values override any previous values set by higher level settings, with aliases being an exception. Alias settings will be merged with higher level configurations for alias. In addition, if the same alias exist for both default/user settings and project settings, the project setting will take precedence.
@@ -249,6 +260,9 @@ To specify the current working directory, simply type a colon, without any prece
 
 ## Notes
 Thanks to Dima Kukushkin ([xobb1t](https://github.com/xobb1t)) for the original work on this plugin. Also, thank you to [facelessuser](https://github.com/facelessuser), and by extension biermeester and matthjes for the idea of platform specific settings. Additional thanks to [kemayo](https://github.com/kemayo) for the work in identifying git executable.
+
+### Libraries Used
+* [ushlex](https://bitbucket.org/mixmastamyk/ushlex) - Improved version of shlex, supporting unicode characters for Python 2.
 
 ### Contributors
 * [alirezadot](https://github.com/alirezadot)

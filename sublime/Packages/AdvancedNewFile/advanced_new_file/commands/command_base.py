@@ -10,8 +10,14 @@ from ..platform.nix_platform import NixPlatform
 from ..completions.nix_completion import NixCompletion
 from ..completions.windows_completion import WindowsCompletion
 
-VIEW_NAME = "AdvancedNewFileCreation"
+if not IS_ST3:
+    if PLATFORM == "windows":
+        import sys
+        sys.path.append(os.path.dirname(sys.executable))
+    from ..lib.ushlex import split as st2_shlex_split
 
+
+VIEW_NAME = "AdvancedNewFileCreation"
 
 class AdvancedNewFileBase(object):
 
@@ -46,6 +52,7 @@ class AdvancedNewFileBase(object):
         return path
 
     def generate_initial_path(self, initial_path=None):
+        path = None
         # Search for initial string
         if initial_path is not None:
             path = initial_path
@@ -54,7 +61,8 @@ class AdvancedNewFileBase(object):
                 cursor_text = self.get_cursor_path()
                 if cursor_text != "":
                     path = cursor_text
-            else:
+
+            if path is None:
                 path = self.settings.get(DEFAULT_INITIAL_SETTING)
 
         return path
@@ -98,7 +106,12 @@ class AdvancedNewFileBase(object):
                 if filename is not None:
                     root = os.path.dirname(filename)
             if root is None:
-                root = os.path.expanduser("~/")
+                if self.settings.get(CURRENT_FALLBACK_TO_PROJECT_SETTING, False):
+                    folder_index = self.__validate_folder_index(0)
+                    if folder_index == -1:
+                        root = os.path.expanduser("~/")
+                else:
+                    root = os.path.expanduser("~/")
         elif setting == "project_folder":
             folder_index = self.settings.get(index_setting)
             folder_index = self.__validate_folder_index(folder_index)
@@ -119,14 +132,32 @@ class AdvancedNewFileBase(object):
             folder_index = 0
         return folder_index
 
+    def __parse_for_shell_input(self, path):
+        if not IS_ST3 and self.__contains_non_ascii(path):
+            split_path = self.__split_shell_input_for_st2_non_ascii(path)
+        else:
+            split_path = shlex.split(str(path))
+
+        return " ".join(split_path)
+
+    def __split_shell_input_for_st2_non_ascii(self, path):
+        return st2_shlex_split(path)
+
+    def __contains_non_ascii(self, string):
+        # Don't really like this....
+        try:
+            string.decode("ascii")
+        except UnicodeEncodeError:
+            return True
+        return False
+
     def split_path(self, path=""):
         HOME_REGEX = r"^~[/\\]"
         root = None
         try:
             root, path = self.platform.split(path)
             if self.settings.get(SHELL_INPUT_SETTING, False) and len(path) > 0:
-                split_path = shlex.split(str(path))
-                path = " ".join(split_path)
+                path = self.__parse_for_shell_input(path)
             # Parse if alias
             if TOP_LEVEL_SPLIT_CHAR in path and root is None:
                 parts = path.rsplit(TOP_LEVEL_SPLIT_CHAR, 1)
@@ -379,6 +410,18 @@ class AdvancedNewFileBase(object):
 
         return path
 
+    def _expand_default_path(self, path):
+        current_file = self.view.file_name()
+        if current_file:
+            directory, current_file_name = os.path.split(current_file)
+            path = path.replace("<filepath>", current_file)
+            path = path.replace("<filedirectory>", directory + os.sep)
+        else:
+            current_file_name = ""
+
+        path = path.replace("<filename>", current_file_name)
+        return path
+
     def _find_open_file(self, file_name):
         window = self.window
         if IS_ST3:
@@ -389,3 +432,17 @@ class AdvancedNewFileBase(object):
                 if view_name != "" and view_name == file_name:
                     return view
         return None
+
+def test_split(s, comments=False, posix=True):
+    is_str = False
+    if type(s) is str:
+        s = unicode(s)
+        is_str = True
+    lex = shlex(s, posix=posix)
+    lex.whitespace_split = True
+    if not comments:
+        lex.commenters = ''
+    if is_str:
+        return [ str(x) for x in list(lex) ]
+    else:
+        return list(lex)

@@ -27,6 +27,7 @@ mods_load_order = [
 
     ".lib",
     ".lib.package_resources",
+    ".lib.ushlex",
 
     ".completions",
     '.completions.nix_completion',
@@ -47,7 +48,8 @@ mods_load_order = [
     '.commands.new_file_command',
     ".commands.move_file_command",
     ".commands.delete_file_command",
-    ".commands.copy_file_command"
+    ".commands.copy_file_command",
+    ".commands.cut_to_file"
 ]
 
 for suffix in mods_load_order:

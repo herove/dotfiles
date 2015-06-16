@@ -372,7 +372,7 @@ def select_linter(view, ignore_disabled=False):
     if syntax in syntaxMap:
         language = syntaxMap.get(syntax, '').lower()
     elif lc_syntax in syntaxMap:
-        language = syntaxMap(lc_syntax, '').lower()
+        language = syntaxMap.get(lc_syntax, '').lower()
     elif lc_syntax in LINTERS:
         language = lc_syntax
 

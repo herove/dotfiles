@@ -17,11 +17,16 @@ class Linter(BaseLinter):
             match = re.match(r'[Ee]rr(or)?: (?P<error>.+?(Syntax error at \'(?P<near>.+?)\'; expected \'.+\')) at /.+?:(?P<line>\d+)?', line)
             if not match:
                 match = re.match(r'[Ee]rr(or)?: (?P<error>.+?(Could not match (?P<near>.+?))?) at /.+?:(?P<line>\d+)?', line)
+                if not match:
+                    match = re.match(r'(ERROR|WARNING): (?P<error>.+?) on line (?P<line>\d+)?', line)
 
             if match:
                 error, line = match.group('error'), match.group('line')
                 lineno = int(line)
-                near = match.group('near')
+                try:
+                    near = match.group('near')
+                except IndexError:
+                    near = ''
 
                 if near:
                     error = '{0}, near "{1}"'.format(error, near)

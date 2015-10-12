@@ -133,6 +133,7 @@ Bundle 'a.vim'
 Bundle 'Align'
 Bundle 'jiangmiao/auto-pairs'
 " Bundle 'bufexplorer.zip'
+Bundle 'jlanzarotta/bufexplorer'
 Bundle 'ccvext.vim'
 Bundle 'cSyntaxAfter'
 Bundle 'ctrlpvim/ctrlp.vim'
@@ -156,6 +157,7 @@ Bundle 'taglist.vim'
 Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'pydiction'
+Bundle 'fholgado/minibufexpl.vim'
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -936,19 +938,39 @@ au BufRead,BufNewFile,BufEnter * cd %:p:h
  
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
 
-
-function InsertPythonHeader()
-    let l1 = getline(1)
-    let l2 = getline(2)
-    if  match('\#!/', l1) == 0
-        exec 1
-        normal O
-        call setline(1,'#!/usr/bin/env python')
+"Python 注释
+function InsertPythonComment()
+    exe 'normal'.1.'G'
+    let line = getline('.')
+    if line =~ '^#!.*$' || line =~ '^#.*coding:.*$'
+        return
     endif
-    if match("\#", l2) == 0 && (match("-", l2) != 2 || (match("code", l2) != 2))
-        exec 2
-        normal O
-        call setline(2,'#-*- coding:utf-8 -*-')
-    endif
+    normal O
+    call setline('.', '#!/usr/bin/env python')
+    normal o
+    call setline('.', '# -*- coding:utf-8 -*-')
+    normal o
+    call setline('.', '#')
+    normal o
+    call setline('.', '# Author: '.g:python_author)
+    normal o
+    call setline('.', '# E-mail: '.g:python_email)
+    normal o
+    call setline('.', '# Date: '.strftime("%y/%m/%d %H:%M:%S"))
+    normal o
+    call setline('.', '# Desc: ')
+    normal o
+    call setline('.', '#')
+    normal o
+    call cursor(7, 17)
 endfunction
-au FileType python call InsertPythonHeader()
+function InsertCommentWhenOpen()
+    if a:lastline == 1 && !getline('.')
+        call InsertPythonComment()
+    end
+endfunc
+au FileType python :%call InsertCommentWhenOpen()
+au FileType python map <F4> :call InsertPythonComment()<cr>
+let g:python_author = 'leihao'
+let g:python_email  = 'leihaozhou@'
+

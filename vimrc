@@ -90,7 +90,7 @@ if g:islinux
             syntax on
         endif
  
-        set mouse=a                    " 在任何模式下启用鼠标
+        "set mouse=a                    " 在任何模式下启用鼠标
         set t_Co=256                   " 在终端启用256色
         set backspace=2                " 设置退格键可用
  
@@ -132,7 +132,7 @@ Bundle 'gmarik/vundle'
 Bundle 'a.vim'
 Bundle 'Align'
 Bundle 'jiangmiao/auto-pairs'
-Bundle 'bufexplorer.zip'
+" Bundle 'bufexplorer.zip'
 Bundle 'ccvext.vim'
 Bundle 'cSyntaxAfter'
 Bundle 'ctrlpvim/ctrlp.vim'
@@ -155,7 +155,8 @@ Bundle 'majutsushi/tagbar'
 Bundle 'taglist.vim'
 Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
- 
+Bundle 'pydiction'
+
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -701,7 +702,7 @@ let g:indentLine_color_term = 239
 " " -----------------------------------------------------------------------------
 " " 快速浏览和操作Buffer
 " " 主要用于同时打开多个文件并相与切换
- 
+
 " " let g:miniBufExplMapWindowNavArrows = 1     "用Ctrl加方向键切换到上下左右的窗口中去
 " let g:miniBufExplMapWindowNavVim = 1        "用<C-k,j,h,l>切换到上下左右的窗口中去
 " let g:miniBufExplMapCTabSwitchBufs = 1      "功能增强（不过好像只有在Windows中才有用）
@@ -759,7 +760,7 @@ set completeopt=menu                        "关闭预览窗口
 " -----------------------------------------------------------------------------
 " 状态栏插件，更好的状态栏效果
 set laststatus=2
-set guifont=Consolas\ for\ Powerline\ FixedD
+set guifont=Monaco\ for\ Powerline
 set t_Co=256
 let g:Powerline_symbols = 'fancy'
 set fillchars+=stl:\ ,stlnc:\"
@@ -933,32 +934,21 @@ endif
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
  
-" =============================================================================
-"                     << windows 下解决 Quickfix 乱码问题 >>
-" =============================================================================
-" windows 默认编码为 cp936，而 Gvim(Vim) 内部编码为 utf-8，所以常常输出为乱码
-" 以下代码可以将编码为 cp936 的输出信息转换为 utf-8 编码，以解决输出乱码问题
-" 但好像只对输出信息全部为中文才有满意的效果，如果输出信息是中英混合的，那可能
-" 不成功，会造成其中一种语言乱码，输出信息全部为英文的好像不会乱码
-" 如果输出信息为乱码的可以试一下下面的代码，如果不行就还是给它注释掉
- 
-" if g:iswindows
-"     function QfMakeConv()
-"         let qflist = getqflist()
-"         for i in qflist
-"            let i.text = iconv(i.text, "cp936", "utf-8")
-"         endfor
-"         call setqflist(qflist)
-"      endfunction
-"      au QuickfixCmdPost make call QfMakeConv()
-" endif
- 
-" =============================================================================
-"                          << 其它 >>
-" =============================================================================
-" 注：上面配置中的"<Leader>"在本软件中设置为"\"键（引号里的反斜杠），如<Leader>t
-" 指在常规模式下按"\"键加"t"键，这里不是同时按，而是先按"\"键后按"t"键，间隔在一
-" 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
-" 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
- 
-" let mapleader = ","
+let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
+
+
+function InsertPythonHeader()
+    let l1 = getline(1)
+    let l2 = getline(2)
+    if  match('\#!/', l1) == 0
+        exec 1
+        normal O
+        call setline(1,'#!/usr/bin/env python')
+    endif
+    if match("\#", l2) == 0 && (match("-", l2) != 2 || (match("code", l2) != 2))
+        exec 2
+        normal O
+        call setline(2,'#-*- coding:utf-8 -*-')
+    endif
+endfunction
+au FileType python call InsertPythonHeader()

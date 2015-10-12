@@ -1,4 +1,5 @@
 {
+	"bootstrapped": true,
 	"in_process_packages":
 	[
 	],
@@ -8,6 +9,7 @@
 		"Alignment",
 		"BracketHighlighter",
 		"ConvertToUTF8",
+		"CTags",
 		"Package Control",
 		"Pylinter",
 		"SublimeClang",

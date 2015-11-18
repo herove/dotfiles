@@ -3,7 +3,6 @@ import os
 
 from ..anf_util import *
 
-
 class WindowsPlatform(object):
     """docstring for WindowsPlatform"""
     def __init__(self, view):
@@ -29,9 +28,6 @@ class WindowsPlatform(object):
         return root, path_offset
 
     def get_alias_absolute_path(self, root, path):
-        if re.search(WIN_ROOT_REGEX, path) is None:
+        if re.search(WIN_ROOT_REGEX, path):
             return os.path.join(root, path)
         return None
-
-    def is_absolute_path(self, path):
-        return re.match(WIN_ROOT_REGEX, path) is not None

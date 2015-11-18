@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# dot
+#
+# `dot` handles installation, updates, things like that. Run it periodically
+# to make sure you're on the latest and greatest.
+
+# Install homebrew packages
+$HOME/dotfiles/homebrew/install.sh
+
+# Set OS X defaults
+$HOME/dotfiles/osx/set-defaults.sh
+

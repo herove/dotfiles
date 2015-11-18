@@ -2,7 +2,6 @@ import re
 import os
 from ..anf_util import *
 
-
 class GenerateCompletionListBase(object):
     """docstring for GenerateCompletionListBase"""
     def __init__(self, command):
@@ -12,17 +11,11 @@ class GenerateCompletionListBase(object):
         self.aliases = command.aliases
         self.settings = command.settings
 
-    def is_home(self, path):
-        return re.match(r"^~[/\\]", path)
-
-    def is_alias(self, path):
-        return self.top_level_split_char in path
-
     def generate_completion_list(self, path_in):
         alias_list = []
         dir_list = []
         file_list = []
-        if self.is_alias(path_in) or self.is_home(path_in):
+        if self.top_level_split_char in path_in or re.match(r"^~[/\\]", path_in):
             pass
         else:
             directory, filename = os.path.split(path_in)
@@ -54,8 +47,7 @@ class GenerateCompletionListBase(object):
         return sorted(completion_list), alias_list, dir_list, file_list
 
     def generate_project_auto_complete(self, base):
-        folder_data = get_project_folder_data(
-            self.settings.get(USE_FOLDER_NAME_SETTING))
+        folder_data = get_project_folder_data(self.settings.get(USE_FOLDER_NAME_SETTING))
         if len(folder_data) > 1:
             folders = [x[0] for x in folder_data]
             return self.generate_auto_complete(base, folders)

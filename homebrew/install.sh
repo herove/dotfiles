@@ -11,6 +11,8 @@ binaries=(
   httpie
   irssi
   mackup
+  nvm
+  npm
 )
 
 # Apps

@@ -158,6 +158,7 @@ Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'pydiction'
 Bundle 'fholgado/minibufexpl.vim'
+Bundle 'altercation/vim-colors-solarized'
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >

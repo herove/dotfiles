@@ -6,8 +6,8 @@
 # to make sure you're on the latest and greatest.
 
 # Install homebrew packages
-$HOME/dotfiles/homebrew/install.sh
+$HOME/.dotfiles/homebrew/install.sh
 
 # Set OS X defaults
-$HOME/dotfiles/osx/set-defaults.sh
+$HOME/.dotfiles/osx/set-defaults.sh
 

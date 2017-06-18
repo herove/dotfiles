@@ -159,6 +159,7 @@ Bundle 'ZoomWin'
 Bundle 'pydiction'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'Lokaltog/powerline'
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
